@@ -1,0 +1,6 @@
+---
+layout: base
+---
+{% for entry in site.pages %}
+<a href="{{ entry.url %}">{% entry.title %}</a>
+{% endfor %}
