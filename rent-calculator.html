@@ -4,43 +4,87 @@ title: Rent Calculator
 jquery: 1.12.4
 bootstrap: 3.3.7
 ---
-<div class="container this-page"><div class="row">
-  <div class="col-sm-6 text-right">
+<div class="container"><div class="row">
+  <div class="right-side-form col-sm-4 well pull-right" style="height:600px;">
+    form here
+  </div>
 
-  <form id="interactive" class="form">
-    <p><label class="" for="income">Enter your county and your rent per month, and we'll calculate some things, probably.</label></p>
+  <div class="col-sm-8 this-page">
 
-    <div class="form-group">
-      <div class="input-group">
-        <div class="input-group-addon">€</div>
-        <input type="number" class="form-control" id="rent" placeholder="Amount">
-        <div class="input-group-addon">.00</div>
+    <form id="interactive" class="form">
+      <p><label class="" for="income">Enter your county and your rent per month, and we'll calculate some things, probably.</label></p>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">€</div>
+          <input type="number" class="form-control" id="rent" placeholder="Amount">
+          <div class="input-group-addon">.00</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-8">
+          <select id="county" class="form-control">
+            <option value="">-- select county --</option>
+            <option value="5055">Dublin County +50.6%</option>
+            <option value="3392">Lenister +33.9%</option>
+            <option value="2528">Munster +25.3%</option>
+            <option value="1867">Connaught/Ulster +18.7%</option>
+            <option value="5370">Dublin City Centre +53.7%</option>
+            <option value="4760">Cork City +47.6%</option>
+            <option value="4160">Galway City +41.6%</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <button type="submit" class="btn btn-primary btn-block">Calculate</button>
+        </div>
+      </div>
+    </form>
+
+
+    <div id="expandy" class="well noshow">
+      <div class="row">
+        <div class="col-xs-6">
+          <h2 class="text-info">2011</h2>
+          <p> In your area in 2011, you would have been paying roughly</p>
+          <div class="input-group">
+            <div class="input-group-addon">€</div>
+            <span class="form-control" id="answer-2011">{ amount }</span>
+            <div class="input-group-addon">.00</div>
+          </div>
+          <span class="text-muted col-xs-12 text-right"><small>per month</small></span>
+          <p> That's €<span id="answer-2011-diff">{ amount }</span> less per year.</p>
+        </div>
+        <div class="col-xs-6 text-right">
+          <h2 class="text-right text-warning">2021</h2>
+          <p> And if rents continue to increase at this rate, you could be paying</p>
+          <div class="input-group">
+            <div class="input-group-addon">€</div>
+            <span class="form-control" id="answer-2021">{ amount }</span>
+            <div class="input-group-addon">.00</div>
+          </div>
+          <span class="text-muted col-xs-12 text-right"><small>per month</small></span>
+          <p> That's €<span id="answer-2021-diff">{ amount }</span> more per year.</p>
+        </div>
+
+        <div class="col-xs-12">
+          <h2>That's an increase of €<span id="answer">{ amount }</span> per year in just one decade.</h2>
+
+          <p>Help us push back against inordinate rent increases. Sign our
+          petition here, and share with your friends on the next page!</p>
+        </div>
       </div>
     </div>
-
-    <div class="form-group">
-      <select id="county" class="form-control">
-        <option value="">-- select county --</option>
-        <option value="5055">Dublin County</option>
-        <option value="3392">Lenister </option>
-        <option value="2528">Munster</option>
-        <option value="1867">Connaught/Ulster</option>
-        <option value="5370">Dublin City Centre </option>
-        <option value="4760">Cork City</option>
-        <option value="4160">Galway City</option>
-      </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Calculate</button>
-  </form>
   </div>
 
-  <div class="col-sm-6">
-  <p>Your rent will have gone up by </p> <h1>€ <span id="answer"></span></h1> <p>per year.</p>
-  </div>
+
 </div></div>
 
 <script>
+// from http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 $(document).ready(function() {
   $('#interactive').on('submit', function(e) {
     e.preventDefault();
@@ -55,18 +99,17 @@ $(document).ready(function() {
     futureRate = increaseRate + 1;
     pastRate = 1.0 / futureRate;
 
-    console.log("county increase rate " + increaseRate);
-    console.log("future rate multiplier " + futureRate);
-    console.log("past rate multiplier  " + pastRate);
+    futureRent = Math.round(currentRent * futureRate / 10) * 10;
+    pastRent = Math.round(currentRent * pastRate / 10) * 10;
 
-    futureRent = Math.round(currentRent * futureRate);
-    pastRent = Math.round(currentRent * pastRate);
+    rentDifference = Math.round(12 * (futureRent - pastRent));
 
-    rentDifference = 12 * (futureRent - pastRent);
-
-    $('#answer').text(rentDifference);
-
-
+    $('#answer').text(numberWithCommas(rentDifference));
+    $('#answer-2011').text(numberWithCommas(pastRent));
+    $('#answer-2021').text(numberWithCommas(futureRent));
+    $('#answer-2011-diff').text(numberWithCommas((currentRent - pastRent)*12));
+    $('#answer-2021-diff').text(numberWithCommas((futureRent - currentRent)*12));
+    $('#expandy').show(400);
   });
 });
 </script>
@@ -75,10 +118,22 @@ $(document).ready(function() {
   border-bottom: 2px #A00202 solid;
   min-width: 200px;
 }
-
+.this-page h2.text-warning:first-child,
+.this-page h2.text-info:first-child {
+  margin-top: 0;
+  text-decoration: underline;
+}
+.this-page .noshow { display: none;}
 .this-page {
   padding-top: 40px;
   padding-bottom: 40px;
   font-size: 20px;
 }
+.this-page .initial {
+  display: none;
+}
+#answer-2011, #answer-2021 {
+  text-decoraction: underline;
+}
+
 </style>
