@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% if page.jquery %}
+  <script src="/static/jquery-{{ page.jquery }}.min.js"></script>
+  {% endif %}
+  {% if page.bootstrap %}
+  <link rel="stylesheet" href="/static/bootstrap-{{ page.bootstrap }}.min.css">
+  {% endif %}
+</head>
+<body>
+{{ content }}
+</body>
+</html>

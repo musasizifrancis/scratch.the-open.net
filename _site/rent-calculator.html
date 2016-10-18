@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <script src="/static/jquery-1.12.4.min.js"></script>
+  
+  
+  <link rel="stylesheet" href="/static/bootstrap-3.3.7.min.css">
+  
+</head>
+<body>
+<div class="container this-page"><div class="row">
+  <div class="col-sm-6 text-right">
+
+  <form id="interactive" class="form">
+    <p><label class="" for="income">Enter your county and your rent per month, and we'll calculate some things, probably.</label></p>
+
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">€</div>
+        <input type="number" class="form-control" id="rent" placeholder="Amount">
+        <div class="input-group-addon">.00</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <select id="county" class="form-control">
+        <option value="">-- select county --</option>
+        <option value="5055">Dublin County</option>
+        <option value="3392">Lenister </option>
+        <option value="2528">Munster</option>
+        <option value="1867">Connaught/Ulster</option>
+        <option value="5370">Dublin City Centre </option>
+        <option value="4760">Cork City</option>
+        <option value="4160">Galway City</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Calculate</button>
+  </form>
+  </div>
+
+  <div class="col-sm-6">
+  <p>Your rent will have gone up by </p> <h1>€ <span id="answer"></span></h1> <p>per year.</p>
+  </div>
+</div></div>
+
+<script>
+$(document).ready(function() {
+  $('#interactive').on('submit', function(e) {
+    e.preventDefault();
+
+    currentRent = Math.round(parseInt($('#rent').val().replace(",","")));
+    if (currentRent == NaN) {
+      // raise error
+      return;
+    }
+
+    increaseRate = $('#county').val() / 10000;
+    futureRate = increaseRate + 1;
+    pastRate = 1.0 / futureRate;
+
+    console.log("county increase rate " + increaseRate);
+    console.log("future rate multiplier " + futureRate);
+    console.log("past rate multiplier  " + pastRate);
+
+    futureRent = Math.round(currentRent * futureRate);
+    pastRent = Math.round(currentRent * pastRate);
+
+    rentDifference = 12 * (futureRent - pastRent);
+
+    $('#answer').text(rentDifference);
+
+
+  });
+});
+</script>
+<style>
+.this-page h1 {
+  border-bottom: 2px #A00202 solid;
+  min-width: 200px;
+}
+
+.this-page {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-size: 20px;
+}
+</style>
+
+</body>
+</html>
