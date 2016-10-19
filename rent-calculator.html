@@ -35,7 +35,7 @@ bootstrap: 3.3.7
           </select>
         </div>
         <div class="form-group col-md-4">
-          <button type="submit" class="btn btn-primary btn-block">Calculate</button>
+          <a id="pretend-submit" class="btn btn-primary btn-block">Calculate</a>
         </div>
       </div>
     </form>
@@ -86,7 +86,7 @@ function numberWithCommas(x) {
 }
 
 $(document).ready(function() {
-  $('#interactive').on('submit', function(e) {
+  $('#pretend-submit').on('click', function(e) {
     e.preventDefault();
 
     currentRent = Math.round(parseInt($('#rent').val().replace(",","")));
@@ -129,9 +129,7 @@ $(document).ready(function() {
   padding-bottom: 40px;
   font-size: 20px;
 }
-.this-page .initial {
-  display: none;
-}
+
 #answer-2011, #answer-2021 {
   text-decoraction: underline;
 }
