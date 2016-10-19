@@ -6,71 +6,74 @@ bootstrap: 3.3.7
 ---
 <div class="container"><div class="row">
   <div class="right-side-form col-sm-4 well pull-right" style="height:600px;">
-    form here
+    <h2>The Form is Here!</h2>
   </div>
 
-  <div class="col-sm-8 this-page">
+  <div class="col-sm-8">
+    <div class="this-page">
 
-    <form id="interactive" class="form">
-      <p><label class="" for="income">Enter your county and your rent per month, and we'll calculate some things, probably.</label></p>
+      <form id="interactive" class="form">
 
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-addon">€</div>
-          <input type="number" class="form-control" id="rent" placeholder="Amount">
-          <div class="input-group-addon">.00</div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-8">
-          <select id="county" class="form-control">
-            <option value="">-- select county --</option>
-            <option value="5055">Dublin County +50.6%</option>
-            <option value="3392">Lenister +33.9%</option>
-            <option value="2528">Munster +25.3%</option>
-            <option value="1867">Connaught/Ulster +18.7%</option>
-            <option value="5370">Dublin City Centre +53.7%</option>
-            <option value="4760">Cork City +47.6%</option>
-            <option value="4160">Galway City +41.6%</option>
-          </select>
-        </div>
-        <div class="form-group col-md-4">
-          <a id="pretend-submit" class="btn btn-primary btn-block">Calculate</a>
-        </div>
-      </div>
-    </form>
-
-
-    <div id="expandy" class="well noshow">
-      <div class="row">
-        <div class="col-xs-6">
-          <h2 class="text-info">2011</h2>
-          <p> In your area in 2011, you would have been paying roughly</p>
+        <div class="form-group rent">
+          <label class="control-label" for="income">Enter your monthly rent</label>
           <div class="input-group">
             <div class="input-group-addon">€</div>
-            <span class="form-control" id="answer-2011">{ amount }</span>
+            <input type="number" class="form-control input-lg" id="rent" placeholder="Amount">
             <div class="input-group-addon">.00</div>
           </div>
-          <span class="text-muted col-xs-12 text-right"><small>per month</small></span>
-          <p> That's €<span id="answer-2011-diff">{ amount }</span> less per year.</p>
         </div>
-        <div class="col-xs-6 text-right">
-          <h2 class="text-right text-warning">2021</h2>
-          <p> And if rents continue to increase at this rate, you could be paying</p>
-          <div class="input-group">
-            <div class="input-group-addon">€</div>
-            <span class="form-control" id="answer-2021">{ amount }</span>
-            <div class="input-group-addon">.00</div>
+        <div class="row">
+          <div class="form-group county col-md-8">
+            <label class="control-label">Please select a county</label>
+            <select id="county" class="form-control">
+              <option value="">-- select county --</option>
+              <option value="5055">Dublin County +50.6%</option>
+              <option value="3392">Lenister +33.9%</option>
+              <option value="2528">Munster +25.3%</option>
+              <option value="1867">Connaught/Ulster +18.7%</option>
+              <option value="5370">Dublin City Centre +53.7%</option>
+              <option value="4760">Cork City +47.6%</option>
+              <option value="4160">Galway City +41.6%</option>
+            </select>
           </div>
-          <span class="text-muted col-xs-12 text-right"><small>per month</small></span>
-          <p> That's €<span id="answer-2021-diff">{ amount }</span> more per year.</p>
+          <div class="form-group col-md-4">
+            <label class="control-label">&nbsp;</label>
+            <button type="submit" id="pretend-submit" class="btn btn-primary btn-block">Calculate</button>
+          </div>
         </div>
+      </form>
 
-        <div class="col-xs-12">
-          <h2>That's an increase of €<span id="answer">{ amount }</span> per year in just one decade.</h2>
+      <div id="expandy" class="well noshow">
+        <div class="row">
+          <div class="col-xs-6">
+            <h2 class="text-info">2011</h2>
+            <p> In your area in 2011, you would have been paying roughly</p>
+            <div class="input-group">
+              <div class="input-group-addon">€</div>
+              <span class="form-control" id="answer-2011">{ amount }</span>
+              <div class="input-group-addon">.00</div>
+            </div>
+            <span class="text-muted col-xs-12 text-right"><small>per month</small></span>
+            <p> That's €<span id="answer-2011-diff">{ amount }</span> less per year.</p>
+          </div>
+          <div class="col-xs-6 text-right">
+            <h2 class="text-right text-warning">2021</h2>
+            <p> And if rents continue to increase at this rate, you could be paying</p>
+            <div class="input-group">
+              <div class="input-group-addon">€</div>
+              <span class="form-control" id="answer-2021">{ amount }</span>
+              <div class="input-group-addon">.00</div>
+            </div>
+            <span class="text-muted col-xs-12 text-right"><small>per month</small></span>
+            <p> That's €<span id="answer-2021-diff">{ amount }</span> more per year.</p>
+          </div>
 
-          <p>Help us push back against inordinate rent increases. Sign our
-          petition here, and share with your friends on the next page!</p>
+          <div class="col-xs-12">
+            <h2>That's an increase of €<span id="answer">{ amount }</span> per year in just one decade.</h2>
+
+            <p>Help us push back against inordinate rent increases. Sign our
+            petition here, and share with your friends on the next page!</p>
+          </div>
         </div>
       </div>
     </div>
@@ -85,17 +88,27 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+
 $(document).ready(function() {
-  $('#pretend-submit').on('click', function(e) {
+  $('#interactive').on('submit', function(e) {
     e.preventDefault();
+    valid = true;
 
     currentRent = Math.round(parseInt($('#rent').val().replace(",","")));
-    if (currentRent == NaN) {
-      // raise error
-      return;
+    increaseRate = $('#county').val() / 10000;
+
+    if (isNaN(currentRent) || currentRent == 0) {
+      $('.form-group.rent').addClass('has-error');
+      valid = false;
+    }
+    if (increaseRate == 0) {
+      $('.form-group.county').addClass('has-error');
+      valid = false;
     }
 
-    increaseRate = $('#county').val() / 10000;
+    if (!valid) return;
+
+
     futureRate = increaseRate + 1;
     pastRate = 1.0 / futureRate;
 
@@ -110,6 +123,9 @@ $(document).ready(function() {
     $('#answer-2011-diff').text(numberWithCommas((currentRent - pastRent)*12));
     $('#answer-2021-diff').text(numberWithCommas((futureRent - currentRent)*12));
     $('#expandy').show(400);
+
+    $('.form-group.rent, .form-group.county').removeClass('has-error');
+
   });
 });
 </script>
